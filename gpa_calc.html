@@ -1,0 +1,239 @@
+<!--
+Copyright (c) 2012 Therin Irwin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in 
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+--!>
+<!doctype html>
+<html>
+<head>
+   <title>GPA Calculator</title>
+   <script language="javascript" type="text/javascript" src="gpa_calc.js"></script>
+   <script language="javascript" type="text/javascript" src="jquery.js"></script>
+</head>
+<body>
+<div id="container">
+      <h1>GPA Calculator</h1>
+      	<p>This calculator can be used for you to plan your quarter goals and also to project your new Cal Poly GPA when you are repeating a course.  Do remember that this is an unofficial tool, only as accurate as the information you enter!</p>
+
+<div id="first" class="contentBox expandPane" onclick="javascript:togglePane(this)"><span class="expandTitle">Calculate your GPA for the current quarter only (and without repeats)</span>
+<ul style="display:none;">
+<br />
+    <li>Leave the Current Cumulative GPA table blank.</li>
+    <li>Enter the name, number of units, and your grade range in each course. Note that the &quot;grade range&quot; are the high and low grades you anticipate for each course; e.g., if you have a B in a class and the final is worth a good portion of your grade, you may decide that a range of between A and C+ is possible for your grade.</li>
+    <li>After you enter a unit count and a grade range for each class, your GPA estimates will be displayed in the third table, under GPA High and GPA Low.</li>
+</ul></div>
+
+<div id="second" class="contentBox expandPane" onclick="javascript:togglePane(this)"><span class="expandTitle">Calculate your GPA for the current quarter (with repeats)</span>
+<ul style="display:none;">
+<br />
+	<li>Enter in your total graded units and current cumulative GPA in the first table.</li>
+    <li>Then select the check box under the &quot;Repeating Class?&quot; Column.</li>
+    <li>Select the previous grade you received in the class you are repeating.</li>
+    <li>The calculator will adjust your GPA and unit count accordingly to show your new projected GPA.</li>
+</ul></div>
+		<form class="fillpage" name="gpa_calc" id="gpa_calc">
+            <fieldset class="fillpage">
+                <legend class="smallMargin">Cal Poly GPA Calculator</legend><br />
+                
+				<table id="cumGPA">
+                	<caption>Current Cumulative GPA</caption>
+                  <tr>
+                    <th scope="col">Units Graded</th>
+                    <th scope="col">GPA (4.0 scale)</th>
+                  </tr>
+                  <tr>
+                    <td><input type="text" name="curUnits" id="curUnits" maxlength="3" class="shortInput" /></td>
+                    <td>
+                    	<input type="text" name="curGPA" id="curGPA" maxlength="6" class="medInput" />
+                    	<input type="hidden" name="effUnits" id="effUnits" />
+                        <input type="hidden" name="effQps" id="effQps" />
+                    </td>
+                  </tr>
+                </table>
+				<table id="termUnits">
+				  <caption>
+				    Current Quarter Classes
+			      </caption>
+				  <tr>
+				    <th scope="col">Course Title</th>
+				    <th scope="col">Units</th>
+				    <th name="repeatCell" scope="col">Repeating Class?</th>
+				    <th scope="col">Potential Grade Range</th>
+			      </tr>
+				  <tr id="newRow">
+				    <td><input type="text" name="course[]" /></td>
+				    <td><input type="text" name="units[]" maxlength="1" class="shortInput" /></td>
+				    <td name="repeatCell"><input type="checkbox" name="repeat[]" value="1" class="shortInput" />
+				      <label for="gradePrev[]">Prev:</label>
+				      <select name="gradePrev[]">
+				        <option value="1.3">D+</option>
+				        <option value="1">D</option>
+				        <option value="0.7">D-</option>
+				        <option value="0">F</option>
+			          </select></td>
+				    <td><label for="gradeHigh1">High:</label>
+				      <select name="gradeHigh[]" id="gradeHigh1">
+				        <option value="4">A</option>
+				        <option value="3.7">A-</option>
+				        <option value="3.3">B+</option>
+				        <option value="3">B</option>
+				        <option value="2.7">B-</option>
+				        <option value="2.3">C+</option>
+				        <option value="2">C</option>
+				        <option value="1.7">C-</option>
+				        <option value="1.3">D+</option>
+				        <option value="1">D</option>
+				        <option value="0.7">D-</option>
+				        <option value="0">F</option>
+			          </select>
+				      <label for="gradeLow1">Low:</label>
+				      <select name="gradeLow[]" id="gradeLow1">
+				        <option value="4">A</option>
+				        <option value="3.7">A-</option>
+				        <option value="3.3">B+</option>
+				        <option value="3">B</option>
+				        <option value="2.7">B-</option>
+				        <option value="2.3">C+</option>
+				        <option value="2">C</option>
+				        <option value="1.7">C-</option>
+				        <option value="1.3">D+</option>
+				        <option value="1">D</option>
+				        <option value="0.7">D-</option>
+				        <option selected="selected" value="0">F</option>
+			          </select>
+				      <input type="hidden" name="highPoints[]" id="highPoints1" value="0" readonly="readonly" />
+				      <input type="hidden" name="lowPoints[]" id="lowPoints1" value="0" readonly="readonly" /></td>
+			      </tr>
+				  <tr>
+				    <td><input type="text" name="course[]" id="course2" /></td>
+				    <td><input type="text" name="units[]" id="units2" maxlength="1" class="shortInput" /></td>
+				    <td name="repeatCell"><input type="checkbox" name="repeat[]" value="1" id="repeat2" class="shortInput" />
+				      <label for="gradePrev2">Prev:</label>
+				      <select name="gradePrev[]" id="gradePrev2">
+				        <option value="1.3">D+</option>
+				        <option value="1">D</option>
+				        <option value="0.7">D-</option>
+				        <option value="0">F</option>
+			          </select></td>
+				    <td><label for="gradeHigh2">High:</label>
+				      <select name="gradeHigh[]" id="gradeHigh2">
+				        <option value="4">A</option>
+				        <option value="3.7">A-</option>
+				        <option value="3.3">B+</option>
+				        <option value="3">B</option>
+				        <option value="2.7">B-</option>
+				        <option value="2.3">C+</option>
+				        <option value="2">C</option>
+				        <option value="1.7">C-</option>
+				        <option value="1.3">D+</option>
+				        <option value="1">D</option>
+				        <option value="0.7">D-</option>
+				        <option value="0">F</option>
+			          </select>
+				      <label for="gradeLow2">Low:</label>
+				      <select name="gradeLow[]" id="gradeLow2">
+				        <option value="4">A</option>
+				        <option value="3.7">A-</option>
+				        <option value="3.3">B+</option>
+				        <option value="3">B</option>
+				        <option value="2.7">B-</option>
+				        <option value="2.3">C+</option>
+				        <option value="2">C</option>
+				        <option value="1.7">C-</option>
+				        <option value="1.3">D+</option>
+				        <option value="1">D</option>
+				        <option value="0.7">D-</option>
+				        <option selected="selected" value="0">F</option>
+			          </select>
+				      <input type="hidden" name="highPoints[]" id="highPoints2" value="0" readonly="readonly" />
+				      <input type="hidden" name="lowPoints[]" id="lowPoints2" value="0" readonly="readonly" /></td>
+			      </tr>
+				  <tr>
+				    <td><input type="text" name="course[]" id="course3" /></td>
+				    <td><input type="text" name="units[]" id="units3" maxlength="1" class="shortInput" /></td>
+				    <td name="repeatCell"><input type="checkbox" name="repeat[]" value="1" id="repeat3" class="shortInput" />
+				      <label for="gradePrev3">Prev:</label>
+				      <select name="gradePrev[]" id="gradePrev3">
+				        <option value="1.3">D+</option>
+				        <option value="1">D</option>
+				        <option value="0.7">D-</option>
+				        <option value="0">F</option>
+			          </select></td>
+				    <td><label for="gradeHigh3">High:</label>
+				      <select name="gradeHigh[]" id="gradeHigh3">
+				        <option value="4">A</option>
+				        <option value="3.7">A-</option>
+				        <option value="3.3">B+</option>
+				        <option value="3">B</option>
+				        <option value="2.7">B-</option>
+				        <option value="2.3">C+</option>
+				        <option value="2">C</option>
+				        <option value="1.7">C-</option>
+				        <option value="1.3">D+</option>
+				        <option value="1">D</option>
+				        <option value="0.7">D-</option>
+				        <option value="0">F</option>
+			          </select>
+				      <label for="gradeLow3">Low:</label>
+				      <select name="gradeLow[]" id="gradeLow3">
+				        <option value="4">A</option>
+				        <option value="3.7">A-</option>
+				        <option value="3.3">B+</option>
+				        <option value="3">B</option>
+				        <option value="2.7">B-</option>
+				        <option value="2.3">C+</option>
+				        <option value="2">C</option>
+				        <option value="1.7">C-</option>
+				        <option value="1.3">D+</option>
+				        <option value="1">D</option>
+				        <option value="0.7">D-</option>
+				        <option selected="selected" value="0">F</option>
+			          </select>
+				      <input type="hidden" name="highPoints[]" id="highPoints3" value="0" readonly="readonly" />
+				      <input type="hidden" name="lowPoints[]" id="lowPoints3" value="0" readonly="readonly" /></td>
+			      </tr>
+			  </table>
+              <a href="javascript:void()" onclick="javascript:addNewRow()">Add New Row</a>&nbsp;&nbsp;
+              <a href="javascript:void()" onclick="javascript:removeRow()">Remove Row</a>&nbsp;&nbsp;
+              <a id="repeatButton" href="javascript:void()" onclick="javascript:toggleRepeat()">Hide Repeats</a>&nbsp;&nbsp;
+              <a id="cumGPAButton" href="javascript:void()" onclick="javascript:toggleCumGPA()">Hide Cumulative GPA</a>
+              <br />&nbsp;<br />
+				<table>
+                  <tr>
+                    <th scope="col"><label for="totUnits">Total Units:</label></th>
+                    <td>
+                    <input type="hidden" id="qPointsHigh" class="medInput" value="0" readonly="readonly" />
+                    <input type="hidden" id="qPointsLow" readonly="readonly" class="medInput" value="0" />
+                    <input type="text" id="totUnits" class="medInput" value="0" readonly="readonly" /></td>
+                  </tr>
+                  <tr>
+                    <th scope="col"><label for="gpaHigh">GPA High:</label></th>
+                    <td><input type="text" id="gpaHigh" class="medInput" value="0" readonly="readonly" /></td>
+                  </tr>
+                  <tr>
+                    <th scope="col"><label for="gpaLow">GPA Low:</label></th>
+                    <td><input type="text" id="gpaLow" readonly="readonly" class="medInput" value="0" /></td>
+                  </tr>
+                </table>
+            </fieldset>
+        </form>
+        <p>Note: This GPA calculator is intended to be used as a tool, not as an official indication of your GPA.  This calculator should be used for planning purposes only and its accuracy is not guaranteed.</p>
+</div>
+</body>
+<html>
