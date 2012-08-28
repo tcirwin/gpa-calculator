@@ -6,7 +6,7 @@
  * Last Updated: 2/9/11
  *
  * Copyright (c) 2012 Therin Irwin
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -40,7 +40,7 @@ var numRows = 3;
 var repeatCheck = function() {
 	var row = 0;
 	for (row = 0; row < numRows; row++) {
-		if (getNames("repeat[]")[row] == this || getNames("gradePrev[]")[row] == this) {
+		if (getNames("repeat[]")[row] === this || getNames("gradePrev[]")[row] === this) {
 			break;
 		}
 	}
@@ -50,8 +50,9 @@ var repeatCheck = function() {
 	curUnits = getId("curUnits").value;
 	if (isRealNumber(curUnits) && isRealNumber(curGPA) && isRealNumber(units)) {
 		
-		if (checkRepeats(curGPA, curUnits))
+		if (checkRepeats(curGPA, curUnits)) {
 			processGPA();
+      }
 		else {
 			this.checked = false;
 			this.selectedIndex = 0;
@@ -82,6 +83,11 @@ var unitsFunc = function() {
  * Initializes numRows number of class rows. Turns off the repeat column initially.
  */
 window.onload = function() {
+   $('#container').on('click', 'div.expandPane', function (event) {
+      $(this).siblings('div.expandPane').children('ul').slideUp('fast');
+      $(this).children('ul').slideToggle('fast');
+   });
+
 	$.fn.exists = function () {
 		return $(this).length !== 0;
 	}

@@ -24,32 +24,33 @@ THE SOFTWARE.
 <head>
    <title>GPA Calculator</title>
    <script language="javascript" type="text/javascript" src="gpa_calc.js"></script>
-   <script language="javascript" type="text/javascript" src="jquery.js"></script>
+   <script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
 </head>
 <body>
 <div id="container">
       <h1>GPA Calculator</h1>
-      	<p>This calculator can be used for you to plan your quarter goals and also to project your new Cal Poly GPA when you are repeating a course.  Do remember that this is an unofficial tool, only as accurate as the information you enter!</p>
+      	<p>This calculator can be used for you to plan your quarter goals and also to project your new GPA when you are repeating a course.  Do remember that this is an unofficial tool, only as accurate as the information you enter!</p>
+<div class="expandSet">
+   <div class="contentBox expandPane"><span class="expandTitle">Calculate your GPA for the current quarter only (and without repeats)</span>
+   <ul style="display:none;">
+   <br />
+       <li>Leave the Current Cumulative GPA table blank.</li>
+       <li>Enter the name, number of units, and your grade range in each course. Note that the &quot;grade range&quot; are the high and low grades you anticipate for each course; e.g., if you have a B in a class and the final is worth a good portion of your grade, you may decide that a range of between A and C+ is possible for your grade.</li>
+       <li>After you enter a unit count and a grade range for each class, your GPA estimates will be displayed in the third table, under GPA High and GPA Low.</li>
+   </ul></div>
 
-<div id="first" class="contentBox expandPane" onclick="javascript:togglePane(this)"><span class="expandTitle">Calculate your GPA for the current quarter only (and without repeats)</span>
-<ul style="display:none;">
-<br />
-    <li>Leave the Current Cumulative GPA table blank.</li>
-    <li>Enter the name, number of units, and your grade range in each course. Note that the &quot;grade range&quot; are the high and low grades you anticipate for each course; e.g., if you have a B in a class and the final is worth a good portion of your grade, you may decide that a range of between A and C+ is possible for your grade.</li>
-    <li>After you enter a unit count and a grade range for each class, your GPA estimates will be displayed in the third table, under GPA High and GPA Low.</li>
-</ul></div>
-
-<div id="second" class="contentBox expandPane" onclick="javascript:togglePane(this)"><span class="expandTitle">Calculate your GPA for the current quarter (with repeats)</span>
-<ul style="display:none;">
-<br />
-	<li>Enter in your total graded units and current cumulative GPA in the first table.</li>
-    <li>Then select the check box under the &quot;Repeating Class?&quot; Column.</li>
-    <li>Select the previous grade you received in the class you are repeating.</li>
-    <li>The calculator will adjust your GPA and unit count accordingly to show your new projected GPA.</li>
-</ul></div>
+   <div class="contentBox expandPane"><span class="expandTitle">Calculate your GPA for the current quarter (with repeats)</span>
+   <ul style="display:none;">
+   <br />
+      <li>Enter in your total graded units and current cumulative GPA in the first table.</li>
+       <li>Then select the check box under the &quot;Repeating Class?&quot; Column.</li>
+       <li>Select the previous grade you received in the class you are repeating.</li>
+       <li>The calculator will adjust your GPA and unit count accordingly to show your new projected GPA.</li>
+   </ul></div>
+</div>
 		<form class="fillpage" name="gpa_calc" id="gpa_calc">
             <fieldset class="fillpage">
-                <legend class="smallMargin">Cal Poly GPA Calculator</legend><br />
+                <legend class="smallMargin">GPA Calculator</legend><br />
                 
 				<table id="cumGPA">
                 	<caption>Current Cumulative GPA</caption>
