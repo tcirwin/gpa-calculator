@@ -3,7 +3,7 @@
  *
  * GPA Calculator Javascript code
  *
- * Last Updated: 2/9/11
+ * Last Updated: Aug. 28, 2012
  *
  * Copyright (c) 2012 Therin Irwin
  *
@@ -25,7 +25,146 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
+var tools = (function () {
+   var p_get_set = function (item_name, type) {
+      type.prototype['get_' + item_name] = function () {
+         return this[item_name];
+      };
+
+      type.prototype['set_' + item_name] = function (val) {
+         this[item_name] = val;
+         this.update();
+      }; 
+   };
+
+   return {
+      get_set : p_get_set
+   };
+}());
  
+var gpa_calc = (function () {
+
+   var Cur_Cumulative = function (spec) {
+      var units = spec.units || 0;
+      var gpa = spec.gpa || 0.0;
+      var calc_update = spec.update;
+
+      return {
+         set_units: function (val) { 
+            units = val;
+            calc_update();
+         },
+         set_gpa: function (val) {
+            gpa = val;
+            calc_update();
+         },
+
+         get_units: function () { return units; },
+         get_points: function () { return units * gpa; }
+      };
+   };
+
+   var Final_GPA = function (spec) {
+      var units = spec.units || 0;
+      var gpa_high = spec.gpa_high || 0.0;
+      var gpa_low = spec.gpa_low || 0.0;
+      var unit_updater = spec.unit_updater || function () {};
+      var gpa_high_updater = spec.gpa_high_updater || function () {};
+      var gpa_low_updater = spec.gpa_low_updater || function () {};
+
+      return {
+         set_unit_updater: function (func) { unit_updater = func; },
+         set_gpa_high_updater: function (func) { gpa_high_updater = func; },
+         set_gpa_low_updater: function (func) { gpa_low_updater = func; },
+
+         set_units: function (val) {
+            units = val;
+            unit_updater(val);
+         },
+
+         set_gpa_high: function (val) {
+            gpa_high = val;
+            gpa_high_updater(val);
+         },
+
+         set_gpa_low: function (val) {
+            gpa_low = val;
+            gpa_low_updater(val);
+         }
+      };
+   };
+
+   var Course = function (spec) {
+      this.name = spec.name || '';
+      this.units = spec.units || '';
+      this.grade_high = spec.grade_high || 4.0;
+      this.grade_low = spec.grade_low || 0.0;
+      this.repeat = spec.repeat || false;
+      this.prev_grade = spec.prev_grade || 0.0;
+      this.update = spec.update || function () {};
+   };
+
+   Course.prototype.get_points_high = function () {
+      return this.units * (this.grade_high -
+        (this.repeat ? this.prev_grade : 0));
+   };
+
+   Course.prototype.get_points_low = function () {
+      return this.units * (this.grade_low -
+        (this.repeat ? this.prev_grade : 0));
+   };
+
+   Course.prototype.effective_units = function () {
+      return this.repeat ? 0 : this.units;
+   };
+
+   tools.get_set('name', Course);
+   tools.get_set('units', Course);
+   tools.get_set('grade_high', Course);
+   tools.get_set('grade_low', Course);
+   tools.get_set('repeat', Course);
+   tools.get_set('prev_points', Course);
+
+   var Calculator = function (spec) {
+      spec = spec || {};
+
+      var cur_grades;
+      var courses = [];
+      var final = Final_GPA({
+         unit_updater: spec.final_unit_updater,
+         gpa_high_updater: spec.final_gpa_high_updater,
+         gpa_low_updater: spec.final_gpa_low_updater
+      });
+
+      var update_calc = spec.update_calc || function () {
+         final.set_units("50");
+         final.set_gpa_high("1.01");
+         final.set_gpa_low("0.53");
+      };
+
+      cur_grades = Cur_Cumulative({update: update_calc});
+
+      for (var i = 0; i < (spec.num_courses || 3); i++) {
+         courses.push(new Course({
+            update: update_calc
+         }));
+      }
+
+      return {
+         refresh: update_calc,
+         get_courses: function () { return courses; },
+         add_course: function () {
+            courses.push(new Course());
+         }
+      };
+   };
+
+   return {
+      init: Calculator
+   };
+}());
+
 /**
  * Default number of class rows to display on the page.
  */
