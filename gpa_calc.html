@@ -1,4 +1,6 @@
 <!--
+gpa_calc.html
+
 Copyright (c) 2012 Therin Irwin
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,8 +25,9 @@ THE SOFTWARE.
 <html>
 <head>
    <title>GPA Calculator</title>
-   <script language="javascript" type="text/javascript" src="gpa_calc.js"></script>
    <script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+   <script language="javascript" type="text/javascript" src="gpa_calc.js"></script>
+   <script language="javascript" type="text/javascript" src="gpa_calc_ui.js"></script>
 </head>
 <body>
 <div id="container">
@@ -210,10 +213,10 @@ THE SOFTWARE.
 				      <input type="hidden" name="lowPoints[]" id="lowPoints3" value="0" readonly="readonly" /></td>
 			      </tr>
 			  </table>
-              <a href="javascript:void()" onclick="javascript:addNewRow()">Add New Row</a>&nbsp;&nbsp;
-              <a href="javascript:void()" onclick="javascript:removeRow()">Remove Row</a>&nbsp;&nbsp;
-              <a id="repeatButton" href="javascript:void()" onclick="javascript:toggleRepeat()">Hide Repeats</a>&nbsp;&nbsp;
-              <a id="cumGPAButton" href="javascript:void()" onclick="javascript:toggleCumGPA()">Hide Cumulative GPA</a>
+              <a id="addRow" class="no-nav" href="#">Add New Row</a>&nbsp;&nbsp;
+              <a id="removeRow" class="no-nav" href="#">Remove Row</a>&nbsp;&nbsp;
+              <a id="repeatButton" class="no-nav" href="#">Hide Repeats</a>&nbsp;&nbsp;
+              <a id="cumGPAButton" class="no-nav" href="#">Hide Cumulative GPA</a>
               <br />&nbsp;<br />
 				<table>
                   <tr>
@@ -237,4 +240,4 @@ THE SOFTWARE.
         <p>Note: This GPA calculator is intended to be used as a tool, not as an official indication of your GPA.  This calculator should be used for planning purposes only and its accuracy is not guaranteed.</p>
 </div>
 </body>
-<html>
+</html>
