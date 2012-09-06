@@ -1,0 +1,23 @@
+div.alert-error {
+   display: none;
+   color: #B94A48;
+   background-color: #F2DEDE;
+   border-width: 2px;
+   border-color: #EED3D7;
+   border-style: solid;
+   border-radius: 5px;
+   position: relative;
+   width: 50%;
+   margin: 10px;
+   padding: 5px;
+}
+
+div.alert-error button.close {
+   position: absolute;
+   right: 0px;
+   bottom: -3px;
+}
+
+#newRow {
+   display: none;
+}
